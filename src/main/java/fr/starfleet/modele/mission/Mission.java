@@ -159,4 +159,8 @@ public class Mission {
     public String getNom() {
         return code + " - " + destination;
     }
+
+    public void initialiserRelationVaisseau() {
+        throw new UnsupportedOperationException("Unimplemented method 'initialiserRelationVaisseau'");
+    }
 }
