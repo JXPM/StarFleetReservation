@@ -80,10 +80,11 @@ public class SystemeReservation {
     }
     
     // Méthodes de gestion des personnes
-    public void ajouterPersonne(Personne personne) {
+    public boolean ajouterPersonne(Personne personne) {
         if (personne != null && !personnes.contains(personne)) {
             personnes.add(personne);
         }
+                return false;
     }
     
     public boolean supprimerPersonne(String id) {

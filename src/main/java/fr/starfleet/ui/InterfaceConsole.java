@@ -1,7 +1,11 @@
 package fr.starfleet.ui;
 
+import fr.starfleet.modele.mission.*;
+import fr.starfleet.modele.personne.*;
+import  fr.starfleet.modele.reservation.*;
+import fr.starfleet.modele.vaisseau.*;
 import fr.starfleet.systeme.SystemeReservation;
-import java.util.Scanner;
+import java.util.*;
 
 public class InterfaceConsole {
     private SystemeReservation systeme;
@@ -268,136 +272,415 @@ public class InterfaceConsole {
     // Méthodes pour la gestion des vaisseaux
     private void ajouterVaisseau() {
         System.out.println("\n=== AJOUTER UN VAISSEAU ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Nom du vaisseau : ");
+        String nomVaisseau = scanner.nextLine();
+        System.out.print("Immatriculation : ");
+        String immatriculation = scanner.nextLine();
+        System.out.print("Capacité maximale de missions : ");
+        int capaciteMaximale = scanner.nextInt();
+        scanner.nextLine(); // Consommer le retour à la ligne
+
+        Vaisseau vaisseau = new Vaisseau(nomVaisseau, immatriculation, capaciteMaximale);
+        systeme.ajouterVaisseau(vaisseau);
+        System.out.println("Vaisseau ajouté avec succès !");
     }
     
     private void modifierVaisseau() {
         System.out.println("\n=== MODIFIER UN VAISSEAU ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Entrez l'immatriculation du vaisseau à modifier : ");
+        String immatriculation = scanner.nextLine();
+        
+        Vaisseau vaisseau = systeme.rechercherVaisseau(immatriculation);
+        if (vaisseau != null) {
+            System.out.print("Nouveau nom (appuyez sur Entrée pour garder l'actuel) : ");
+            String nouveauNom = scanner.nextLine();
+            if (!nouveauNom.isEmpty()) {
+                vaisseau.setNom(nouveauNom);
+            }
+            
+            System.out.print("Nouvelle capacité maximale (-1 pour garder l'actuelle) : ");
+            int nouvelleCapacite = scanner.nextInt();
+            scanner.nextLine(); // Consommer le retour à la ligne
+            
+            if (nouvelleCapacite != -1) {
+                vaisseau.setCapaciteMaximale(nouvelleCapacite);
+            }
+            
+            System.out.println("Vaisseau modifié avec succès !");
+        } else {
+            System.out.println("Vaisseau non trouvé.");
+        }
     }
     
     private void supprimerVaisseau() {
         System.out.println("\n=== SUPPRIMER UN VAISSEAU ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Entrez l'immatriculation du vaisseau à supprimer : ");
+        String immatriculation = scanner.nextLine();
+        
+        if (systeme.supprimerVaisseau(immatriculation)) {
+            System.out.println("Vaisseau supprimé avec succès !");
+        } else {
+            System.out.println("Aucun vaisseau trouvé avec cette immatriculation.");
+        }
     }
     
     private void afficherVaisseaux() {
         System.out.println("\n=== LISTE DES VAISSEAUX ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        List<Vaisseau> vaisseaux = systeme.getVaisseaux();
+        
+        if (vaisseaux.isEmpty()) {
+            System.out.println("Aucun vaisseau enregistré.");
+        } else {
+            for (Vaisseau vaisseau : vaisseaux) {
+                System.out.println("Nom : " + vaisseau.getNom() +
+                                   " - Immatriculation : " + vaisseau.getImmatriculation() +
+                                   " - Capacité max : " + vaisseau.getCapaciteMaximale() +
+                                   " - Missions : " + vaisseau.getNombreMissions());
+            }
+        }
     }
     
     private void rechercherVaisseau() {
         System.out.println("\n=== RECHERCHER UN VAISSEAU ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Entrez l'immatriculation du vaisseau : ");
+        String immatriculation = scanner.nextLine();
+        
+        Vaisseau vaisseau = systeme.rechercherVaisseau(immatriculation);
+        if (vaisseau != null) {
+            System.out.println("Détails du vaisseau :");
+            System.out.println("Nom : " + vaisseau.getNom());
+            System.out.println("Immatriculation : " + vaisseau.getImmatriculation());
+            System.out.println("Capacité maximale : " + vaisseau.getCapaciteMaximale());
+            System.out.println("Nombre de missions : " + vaisseau.getNombreMissions());
+            vaisseau.afficherMissions();
+        } else {
+            System.out.println("Aucun vaisseau trouvé avec cette immatriculation.");
+        }
     }
     
-    // Méthodes pour la gestion des personnes
+    // Les méthodes suivantes nécessiteraient des modifications dans les autres classes
     private void ajouterOfficier() {
-        System.out.println("\n=== AJOUTER UN OFFICIER ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+    System.out.println("\n=== AJOUTER UN OFFICIER ===");
+    System.out.print("Nom de l'officier : ");
+    String nom = scanner.nextLine();
+    System.out.print("Prénom de l'officier : ");
+    String prenom = scanner.nextLine();
+    System.out.print("Identifiant de l'officier : ");
+    String identifiant = scanner.nextLine();
+    System.out.print("Rang de l'officier : ");
+    String rang = scanner.nextLine();
+    System.out.print("Spécialité de l'officier : ");
+    String specialite = scanner.nextLine();
+
+    Officier officier = new Officier(nom, prenom, identifiant, rang, specialite);
+    if ((boolean) systeme.ajouterPersonne(officier)) {
+        System.out.println("Officier ajouté avec succès !");
+    } else {
+        System.out.println("Impossible d'ajouter l'officier.");
     }
-    
-    private void ajouterCivil() {
-        System.out.println("\n=== AJOUTER UN CIVIL ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+}
+
+private void ajouterCivil() {
+    System.out.println("\n=== AJOUTER UN CIVIL ===");
+    System.out.print("Nom du civil : ");
+    String nom = scanner.nextLine();
+    System.out.print("Prénom du civil : ");
+    String prenom = scanner.nextLine();
+    System.out.print("Identifiant du civil : ");
+    String identifiant = scanner.nextLine();
+    System.out.print("Planète d'origine : ");
+    String planeteOrigine = scanner.nextLine();
+    System.out.print("Motif de voyage : ");
+    String motifVoyage = scanner.nextLine();
+
+    Civil civil = new Civil(nom, prenom, identifiant, planeteOrigine, motifVoyage);
+    if (systeme.ajouterPersonne(civil)) {
+        System.out.println("Civil ajouté avec succès !");
+    } else {
+        System.out.println("Impossible d'ajouter le civil.");
     }
+}
     
     private void modifierPersonne() {
         System.out.println("\n=== MODIFIER UNE PERSONNE ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Entrez l'identifiant de la personne à modifier : ");
+        String id = scanner.nextLine();
+        
+        Personne personne = systeme.rechercherPersonne(id);
+        if (personne != null) {
+            System.out.print("Nouveau nom (Entrée pour garder l'actuel) : ");
+            String nouveauNom = scanner.nextLine();
+            if (!nouveauNom.isEmpty()) {
+                personne.setNom(nouveauNom);
+            }
+            
+            System.out.print("Nouveau prénom (Entrée pour garder l'actuel) : ");
+            String nouveauPrenom = scanner.nextLine();
+            if (!nouveauPrenom.isEmpty()) {
+                personne.setPrenom(nouveauPrenom);
+            }
+            
+            System.out.println("Personne modifiée avec succès !");
+        } else {
+            System.out.println("Personne non trouvée.");
+        }
     }
     
     private void supprimerPersonne() {
         System.out.println("\n=== SUPPRIMER UNE PERSONNE ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Entrez l'identifiant de la personne à supprimer : ");
+        String id = scanner.nextLine();
+        
+        if (systeme.supprimerPersonne(id)) {
+            System.out.println("Personne supprimée avec succès !");
+        } else {
+            System.out.println("Aucune personne trouvée avec cet identifiant.");
+        }
     }
     
     private void afficherPersonnes() {
         System.out.println("\n=== LISTE DES PERSONNES ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        List<Personne> personnes = systeme.getPersonnes();
+        
+        if (personnes.isEmpty()) {
+            System.out.println("Aucune personne enregistrée.");
+        } else {
+            for (Personne personne : personnes) {
+                System.out.println(personne.getNom() + " " + personne.getPrenom() +
+                                   " (ID: " + personne.getIdentifiant() + ")");
+            }
+        }
     }
     
     private void rechercherPersonne() {
         System.out.println("\n=== RECHERCHER UNE PERSONNE ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Entrez l'identifiant de la personne : ");
+        String id = scanner.nextLine();
+        
+        Personne personne = systeme.rechercherPersonne(id);
+        if (personne != null) {
+            System.out.println("Détails de la personne :");
+            System.out.println("Nom : " + personne.getNom());
+            System.out.println("Prénom : " + personne.getPrenom());
+            System.out.println("Identifiant : " + personne.getIdentifiant());
+            System.out.println("Description : " + personne.getDescription());
+        } else {
+            System.out.println("Aucune personne trouvée avec cet identifiant.");
+        }
     }
     
-    // Méthodes pour la gestion des missions
     private void creerMission() {
         System.out.println("\n=== CRÉER UNE MISSION ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Code de la mission : ");
+        String code = scanner.nextLine();
+        System.out.print("Description : ");
+        String description = scanner.nextLine();
+        System.out.print("Destination : ");
+        String destination = scanner.nextLine();
+        System.out.print("Capacité maximale : ");
+        int capaciteMaximale = scanner.nextInt();
+        scanner.nextLine(); // Consommer le retour à la ligne
+        
+        System.out.print("Date de départ (AAAA-MM-JJ) : ");
+        String dateDepart = scanner.nextLine();
+        System.out.print("Date de retour (AAAA-MM-JJ) : ");
+        String dateRetour = scanner.nextLine();
+        System.out.print("Immatriculation du vaisseau : ");
+        String immatriculationVaisseau = scanner.nextLine();
+        
+        try {
+            // Conversion des dates (simplifiée ici, vous devriez utiliser un formateur de date plus robuste)
+            Date depart = new Date(dateDepart.replace("-", "/"));
+            Date retour = new Date(dateRetour.replace("-", "/"));
+            
+            systeme.creerMission(code, description, depart, retour, destination,
+                                  immatriculationVaisseau, capaciteMaximale);
+            System.out.println("Mission créée avec succès !");
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la création de la mission : " + e.getMessage());
+        }
     }
     
     private void modifierMission() {
         System.out.println("\n=== MODIFIER UNE MISSION ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Code de la mission à modifier : ");
+        String code = scanner.nextLine();
+        
+        Mission mission = systeme.rechercherMission(code);
+        if (mission != null) {
+            System.out.print("Nouvelle description (Entrée pour garder l'actuelle) : ");
+            String nouvelleDescription = scanner.nextLine();
+            if (!nouvelleDescription.isEmpty()) {
+                mission.setDescription(nouvelleDescription);
+            }
+            
+            System.out.print("Nouvelle destination (Entrée pour garder l'actuelle) : ");
+            String nouvelleDestination = scanner.nextLine();
+            if (!nouvelleDestination.isEmpty()) {
+                mission.setDestination(nouvelleDestination);
+            }
+            
+            System.out.println("Mission modifiée avec succès !");
+        } else {
+            System.out.println("Mission non trouvée.");
+        }
     }
     
     private void annulerMission() {
         System.out.println("\n=== ANNULER UNE MISSION ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Code de la mission à annuler : ");
+        String code = scanner.nextLine();
+        
+        if (systeme.annulerMission(code)) {
+            System.out.println("Mission annulée avec succès !");
+        } else {
+            System.out.println("Impossible d'annuler la mission.");
+        }
     }
     
     private void afficherMissions() {
         System.out.println("\n=== LISTE DES MISSIONS ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        List<Mission> missions = systeme.getMissions();
+        
+        if (missions.isEmpty()) {
+            System.out.println("Aucune mission enregistrée.");
+        } else {
+            for (Mission mission : missions) {
+                System.out.println("Code : " + mission.getCode() + 
+                                   " - Destination : " + mission.getDestination() +
+                                   " - Date départ : " + mission.getDateDepart() +
+                                   " - Places disponibles : " + mission.getNombrePlacesDisponibles());
+            }
+        }
     }
     
     private void rechercherMissions() {
         System.out.println("\n=== RECHERCHER DES MISSIONS ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Entrez une destination : ");
+        String destination = scanner.nextLine();
+        
+        List<Mission> missions = systeme.rechercherMissions(destination);
+        
+        if (missions.isEmpty()) {
+            System.out.println("Aucune mission trouvée pour cette destination.");
+        } else {
+            System.out.println("Missions trouvées :");
+            for (Mission mission : missions) {
+                System.out.println("Code : " + mission.getCode() + 
+                                   " - Description : " + mission.getDescription() +
+                                   " - Places disponibles : " + mission.getNombrePlacesDisponibles());
+            }
+        }
     }
     
     private void associerMissionVaisseau() {
         System.out.println("\n=== ASSOCIER UNE MISSION À UN VAISSEAU ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Code de la mission : ");
+        String codeMission = scanner.nextLine();
+        System.out.print("Immatriculation du vaisseau : ");
+        String immatriculationVaisseau = scanner.nextLine();
+        
+        Mission mission = systeme.rechercherMission(codeMission);
+        Vaisseau vaisseau = systeme.rechercherVaisseau(immatriculationVaisseau);
+        
+        if (mission != null && vaisseau != null) {
+            mission.setVaisseau(vaisseau);
+            System.out.println("Mission associée au vaisseau avec succès !");
+        } else {
+            System.out.println("Mission ou vaisseau non trouvé.");
+        }
     }
     
-    // Méthodes pour la gestion des réservations
     private void creerReservation() {
         System.out.println("\n=== CRÉER UNE RÉSERVATION ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Identifiant de la personne : ");
+        String idPersonne = scanner.nextLine();
+        System.out.print("Code de la mission : ");
+        String codeMission = scanner.nextLine();
+        System.out.print("Nombre de passagers : ");
+        int nombrePassagers = scanner.nextInt();
+        scanner.nextLine(); // Consommer le retour à la ligne
+        
+        Reservation reservation = systeme.effectuerReservation(idPersonne, codeMission, nombrePassagers);
+        
+        if (reservation != null) {
+            System.out.println("Réservation créée avec succès !");
+            System.out.println("ID Réservation : " + reservation.getIdReservation());
+        } else {
+            System.out.println("Impossible de créer la réservation.");
+        }
     }
     
     private void confirmerReservation() {
         System.out.println("\n=== CONFIRMER UNE RÉSERVATION ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("ID de la réservation : ");
+        String idReservation = scanner.nextLine();
+        
+        if (systeme.confirmerReservation(idReservation)) {
+            System.out.println("Réservation confirmée avec succès !");
+        } else {
+            System.out.println("Impossible de confirmer la réservation.");
+        }
     }
     
     private void annulerReservation() {
         System.out.println("\n=== ANNULER UNE RÉSERVATION ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("ID de la réservation : ");
+        String idReservation = scanner.nextLine();
+        
+        if (systeme.annulerReservation(idReservation)) {
+            System.out.println("Réservation annulée avec succès !");
+        } else {
+            System.out.println("Impossible d'annuler la réservation.");
+        }
     }
     
     private void afficherReservationsPersonne() {
         System.out.println("\n=== RÉSERVATIONS D'UNE PERSONNE ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Identifiant de la personne : ");
+        String idPersonne = scanner.nextLine();
+        
+        Personne personne = systeme.rechercherPersonne(idPersonne);
+        
+        if (personne != null) {
+            List<Reservation> reservations = systeme.getReservations();
+            boolean reservationTrouvee = false;
+            
+            for (Reservation reservation : reservations) {
+                if (reservation.getPassager().getIdentifiant().equals(idPersonne)) {
+                    System.out.println(reservation);
+                    reservationTrouvee = true;
+                }
+            }
+            
+            if (!reservationTrouvee) {
+                System.out.println("Aucune réservation trouvée pour cette personne.");
+            }
+        } else {
+            System.out.println("Personne non trouvée.");
+        }
     }
     
     private void afficherReservationsMission() {
         System.out.println("\n=== RÉSERVATIONS POUR UNE MISSION ===");
-        // Implémentation à compléter
-        System.out.println("Fonctionnalité non implémentée.");
+        System.out.print("Code de la mission : ");
+        String codeMission = scanner.nextLine();
+        
+        Mission mission = systeme.rechercherMission(codeMission);
+        
+        if (mission != null) {
+            List<Reservation> reservations = mission.getReservations();
+            
+            if (reservations.isEmpty()) {
+                System.out.println("Aucune réservation pour cette mission.");
+            } else {
+                System.out.println("Réservations pour la mission " + codeMission + " :");
+                for (Reservation reservation : reservations) {
+                    System.out.println(reservation);
+                }
+            }
+        } else {
+            System.out.println("Mission non trouvée.");
+        }
     }
 }
