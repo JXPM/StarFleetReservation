@@ -233,12 +233,7 @@ public class InterfaceConsole {
     
     private void sauvegarderDonnees() {
         System.out.println("\n=== SAUVEGARDE DES DONNÉES ===");
-        System.out.print("Entrez le nom du fichier (ou appuyez sur Entrée pour utiliser 'data/sauvegarde.dat') : ");
-        String nomFichier = scanner.nextLine();
-        
-        if (nomFichier.trim().isEmpty()) {
-            nomFichier = "data/sauvegarde.dat";
-        }
+        String nomFichier = "data/sauvegarde.dat";
         
         try {
             systeme.sauvegarderDonnees(nomFichier);
@@ -250,12 +245,7 @@ public class InterfaceConsole {
     
     private void chargerDonnees() {
         System.out.println("\n=== CHARGEMENT DES DONNÉES ===");
-        System.out.print("Entrez le nom du fichier (ou appuyez sur Entrée pour utiliser 'data/sauvegarde.dat') : ");
-        String nomFichier = scanner.nextLine();
-        
-        if (nomFichier.trim().isEmpty()) {
-            nomFichier = "data/sauvegarde.dat";
-        }
+        String nomFichier = "data/sauvegarde.dat";
         
         try {
             SystemeReservation nouveauSysteme = SystemeReservation.chargerDonnees(nomFichier);
