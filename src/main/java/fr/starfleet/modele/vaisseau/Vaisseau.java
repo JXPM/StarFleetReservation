@@ -1,10 +1,12 @@
 package fr.starfleet.modele.vaisseau;
 
+import fr.starfleet.modele.mission.Mission;
 import java.util.ArrayList;
 import java.util.List;
-import fr.starfleet.modele.mission.Mission;
 
 public class Vaisseau {
+    @SuppressWarnings("unused")
+    private static final long serialVersionUID = 1L;
     private String nom;
     private String immatriculation;
     private int capaciteMaximale;

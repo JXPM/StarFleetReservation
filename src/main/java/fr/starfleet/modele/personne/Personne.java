@@ -1,6 +1,8 @@
 package fr.starfleet.modele.personne;
 
 public abstract class Personne {
+    @SuppressWarnings("unused")
+    private static final long serialVersionUID = 1L;
     private String nom;
     private String prenom;
     private String identifiant;

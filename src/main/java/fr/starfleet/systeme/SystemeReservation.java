@@ -8,6 +8,8 @@ import java.io.*;
 import java.util.*;
 
 public class SystemeReservation {
+    @SuppressWarnings("unused")
+    private static final long serialVersionUID = 1L;
     private List<Vaisseau> vaisseaux;
     private List<Personne> personnes;
     private List<Mission> missions;
@@ -104,6 +106,14 @@ public class SystemeReservation {
             }
         }
         return null;
+    }
+    public void mettreAJourPersonne(Personne personne) {
+        for (int i = 0; i < personnes.size(); i++) {
+            if (personnes.get(i).getIdentifiant().equals(personne.getIdentifiant())) {
+                personnes.set(i, personne);
+                break;
+            }
+        }
     }
     
     // Méthodes de gestion des missions

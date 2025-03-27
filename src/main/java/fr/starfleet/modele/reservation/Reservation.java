@@ -5,6 +5,8 @@ import fr.starfleet.modele.personne.Personne;
 import java.util.Date;
 
 public class Reservation {
+    @SuppressWarnings("unused")
+    private static final long serialVersionUID = 1L;
     private String idReservation;
     private Personne passager;
     private Mission mission;

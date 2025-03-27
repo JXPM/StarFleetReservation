@@ -5,6 +5,8 @@ import fr.starfleet.modele.vaisseau.Vaisseau;
 import java.util.*;
 
 public class Mission {
+    @SuppressWarnings("unused")
+    private static final long serialVersionUID = 1L;
     private String code;
     private String description;
     private Date dateDepart;

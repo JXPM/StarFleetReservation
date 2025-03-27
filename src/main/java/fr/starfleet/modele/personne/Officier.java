@@ -3,6 +3,8 @@ package fr.starfleet.modele.personne;
 
 
 public class Officier extends Personne {
+    @SuppressWarnings("unused")
+    private static final long serialVersionUID = 1L;
     private String rang;
     private String specialite;
 

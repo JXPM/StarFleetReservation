@@ -9,7 +9,7 @@ import java.util.*;
 
 public class InterfaceConsole {
     private SystemeReservation systeme;
-    private Scanner scanner;
+    private final Scanner scanner;
     
     // Constructeur
     public InterfaceConsole(SystemeReservation systeme) {
@@ -30,43 +30,44 @@ public class InterfaceConsole {
     
     // Méthode principale pour démarrer l'interface
     public void demarrer() {
-        boolean continuer = true;
-        
-        while (continuer) {
-            afficherMenu();
-            System.out.print("Votre choix : ");
-            int choix = scanner.nextInt();
-            scanner.nextLine(); // Pour consommer le retour à la ligne
+        try (scanner) {
+            boolean continuer = true;
             
-            switch (choix) {
-                case 1:
-                    gererVaisseaux();
-                    break;
-                case 2:
-                    gererPersonnes();
-                    break;
-                case 3:
-                    gererMissions();
-                    break;
-                case 4:
-                    gererReservations();
-                    break;
-                case 5:
-                    sauvegarderDonnees();
-                    break;
-                case 6:
-                    chargerDonnees();
-                    break;
-                case 0:
-                    continuer = false;
-                    System.out.println("Au revoir !");
-                    break;
-                default:
-                    System.out.println("Choix invalide, veuillez réessayer.");
-                    break;
+            while (continuer) {
+                afficherMenu();
+                System.out.print("Votre choix : ");
+                int choix = scanner.nextInt();
+                scanner.nextLine(); // Pour consommer le retour à la ligne
+                
+                switch (choix) {
+                    case 1:
+                        gererVaisseaux();
+                        break;
+                    case 2:
+                        gererPersonnes();
+                        break;
+                    case 3:
+                        gererMissions();
+                        break;
+                    case 4:
+                        gererReservations();
+                        break;
+                    case 5:
+                        sauvegarderDonnees();
+                        break;
+                    case 6:
+                        chargerDonnees();
+                        break;
+                    case 0:
+                        continuer = false;
+                        System.out.println("Au revoir !");
+                        break;
+                    default:
+                        System.out.println("Choix invalide, veuillez réessayer.");
+                        break;
+                }
             }
         }
-        scanner.close();
     }
     
     private void gererVaisseaux() {
@@ -404,9 +405,9 @@ private void ajouterCivil() {
     private void modifierPersonne() {
         System.out.println("\n=== MODIFIER UNE PERSONNE ===");
         System.out.print("Entrez l'identifiant de la personne à modifier : ");
-        String id = scanner.nextLine();
+        String identifiant = scanner.nextLine();
         
-        Personne personne = systeme.rechercherPersonne(id);
+        Personne personne = systeme.rechercherPersonne(identifiant);
         if (personne != null) {
             System.out.print("Nouveau nom (Entrée pour garder l'actuel) : ");
             String nouveauNom = scanner.nextLine();
@@ -419,7 +420,7 @@ private void ajouterCivil() {
             if (!nouveauPrenom.isEmpty()) {
                 personne.setPrenom(nouveauPrenom);
             }
-            
+            systeme.mettreAJourPersonne(personne);
             System.out.println("Personne modifiée avec succès !");
         } else {
             System.out.println("Personne non trouvée.");
@@ -546,7 +547,7 @@ private void ajouterCivil() {
             System.out.println("Aucune mission enregistrée.");
         } else {
             for (Mission mission : missions) {
-                System.out.println("Code : " + mission.getCode() + 
+                System.out.println("Code : " + mission.getCode() +
                                    " - Destination : " + mission.getDestination() +
                                    " - Date départ : " + mission.getDateDepart() +
                                    " - Places disponibles : " + mission.getNombrePlacesDisponibles());

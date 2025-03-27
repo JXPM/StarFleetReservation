@@ -2,6 +2,8 @@
 package fr.starfleet.modele.personne;
 
 public class Civil extends Personne {
+    @SuppressWarnings("unused")
+    private static final long serialVersionUID = 1L; 
     private String planeteOrigine;
     private String motifVoyage;
 
