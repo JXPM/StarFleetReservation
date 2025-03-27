@@ -225,30 +225,20 @@ public class SystemeReservation {
     }
     
     // Méthodes de persistance
-    public void sauvegarderDonnees(String fichier) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fichier))) {
-            oos.writeObject(vaisseaux);
-            oos.writeObject(personnes);
-            oos.writeObject(missions);
-            oos.writeObject(reservations);
-            System.out.println("Données sauvegardées avec succès dans " + fichier);
+    public void sauvegarderDonnees(String nomFichier) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nomFichier))) {
+            oos.writeObject(this);
+            System.out.println("Données sauvegardées avec succès.");
         } catch (IOException e) {
-            System.err.println("Erreur lors de la sauvegarde des données: " + e.getMessage());
+            System.err.println("Erreur lors de la sauvegarde : " + e.getMessage());
         }
     }
     
-    @SuppressWarnings("unchecked")
-    public static SystemeReservation chargerDonnees(String fichier) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fichier))) {
-            SystemeReservation systeme = new SystemeReservation();
-            systeme.setVaisseaux((List<Vaisseau>) ois.readObject());
-            systeme.setPersonnes((List<Personne>) ois.readObject());
-            systeme.setMissions((List<Mission>) ois.readObject());
-            systeme.setReservations((List<Reservation>) ois.readObject());
-            System.out.println("Données chargées avec succès depuis " + fichier);
-            return systeme;
+    public static SystemeReservation chargerDonnees(String nomFichier) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nomFichier))) {
+            return (SystemeReservation) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Erreur lors du chargement des données: " + e.getMessage());
+            System.err.println("Erreur lors du chargement : " + e.getMessage());
             return null;
         }
     }
