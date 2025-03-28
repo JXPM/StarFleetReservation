@@ -5,6 +5,7 @@ import fr.starfleet.modele.personne.*;
 import  fr.starfleet.modele.reservation.*;
 import fr.starfleet.modele.vaisseau.*;
 import fr.starfleet.systeme.SystemeReservation;
+import fr.starfleet.util.DateUtil;
 import java.util.*;
 
 public class InterfaceConsole {
@@ -478,14 +479,13 @@ private void ajouterCivil() {
         String dateRetour = scanner.nextLine();
         System.out.print("Immatriculation du vaisseau : ");
         String immatriculationVaisseau = scanner.nextLine();
-        
+
         try {
-            // Conversion des dates (simplifiée ici, vous devriez utiliser un formateur de date plus robuste)
-            Date depart = new Date(dateDepart.replace("-", "/"));
-            Date retour = new Date(dateRetour.replace("-", "/"));
+            Date depart = DateUtil.stringToDate(dateDepart);
+            Date retour = DateUtil.stringToDate(dateRetour);
             
             systeme.creerMission(code, description, depart, retour, destination,
-                                  immatriculationVaisseau, capaciteMaximale);
+                                 immatriculationVaisseau, capaciteMaximale);
             System.out.println("Mission créée avec succès !");
         } catch (Exception e) {
             System.out.println("Erreur lors de la création de la mission : " + e.getMessage());
