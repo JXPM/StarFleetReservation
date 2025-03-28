@@ -85,13 +85,14 @@ public class SystemeReservation {
     public boolean ajouterPersonne(Personne personne) {
         if (personne != null && !personnes.contains(personne)) {
             personnes.add(personne);
+            return true;
         }
-                return false;
+        return false;
     }
     
     public boolean supprimerPersonne(String id) {
         for (int i = 0; i < personnes.size(); i++) {
-            if (personnes.get(i).getNom().equals(id)) {
+            if (personnes.get(i).getIdentifiant().equals(id)) {  // Utilisez getIdentifiant() au lieu de getNom()
                 personnes.remove(i);
                 return true;
             }
@@ -101,12 +102,13 @@ public class SystemeReservation {
     
     public Personne rechercherPersonne(String id) {
         for (Personne personne : personnes) {
-            if (personne.getNom().equals(id)) {
+            if (personne.getIdentifiant().equals(id)) {  // Utilisez getIdentifiant()
                 return personne;
             }
         }
         return null;
     }
+    
     public void mettreAJourPersonne(Personne personne) {
         for (int i = 0; i < personnes.size(); i++) {
             if (personnes.get(i).getIdentifiant().equals(personne.getIdentifiant())) {
