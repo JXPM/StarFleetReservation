@@ -87,8 +87,13 @@ public class SystemeReservation {
             personnes.add(personne);
             return true;
         }
+        System.out.println("Liste des personnes après ajout :");
+        for (Personne p : personnes) {
+            System.out.println(p.getIdentifiant() + " - " + p.getNom() + " " + p.getPrenom());
+            }
         return false;
     }
+    
     
     public boolean supprimerPersonne(String id) {
         for (int i = 0; i < personnes.size(); i++) {
@@ -102,21 +107,26 @@ public class SystemeReservation {
     
     public Personne rechercherPersonne(String id) {
         for (Personne personne : personnes) {
-            if (personne.getIdentifiant().equals(id)) {  // Utilisez getIdentifiant()
+            System.out.println("Recherche : " + personne.getIdentifiant()); // Debug
+            if (personne.getIdentifiant().equals(id)) {
                 return personne;
             }
         }
+        System.out.println("Personne non trouvée !");
         return null;
     }
     
     public void mettreAJourPersonne(Personne personne) {
         for (int i = 0; i < personnes.size(); i++) {
             if (personnes.get(i).getIdentifiant().equals(personne.getIdentifiant())) {
+                System.out.println("Mise à jour trouvée pour : " + personne.getIdentifiant());
                 personnes.set(i, personne);
-                break;
+                return;
             }
         }
+        System.out.println("Personne non trouvée pour mise à jour !");
     }
+    
     
     // Méthodes de gestion des missions
     public void creerMission(String code, String description, Date dateDepart,
@@ -228,22 +238,29 @@ public class SystemeReservation {
     
     // Méthodes de persistance
     public void sauvegarderDonnees(String nomFichier) {
+        System.out.println("Sauvegarde en cours... Fichier : " + nomFichier);
+        System.out.println("Nombre de personnes avant sauvegarde : " + personnes.size());
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nomFichier))) {
             oos.writeObject(this);
-            System.out.println("Données sauvegardées avec succès.");
+            System.out.println("Données sauvegardées avec succès !");
         } catch (IOException e) {
             System.err.println("Erreur lors de la sauvegarde : " + e.getMessage());
         }
     }
     
+    
     public static SystemeReservation chargerDonnees(String nomFichier) {
+        System.out.println("Chargement du fichier : " + nomFichier);
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nomFichier))) {
-            return (SystemeReservation) ois.readObject();
+            SystemeReservation systeme = (SystemeReservation) ois.readObject();
+            System.out.println("Chargement réussi ! Nombre de personnes : " + systeme.getPersonnes().size());
+            return systeme;
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Erreur lors du chargement : " + e.getMessage());
             return null;
         }
     }
+    
     
     // Statistiques et rapports
     public void afficherStatistiques() {
@@ -271,7 +288,7 @@ public class SystemeReservation {
                 String codeMission = entry.getKey();
                 Mission mission = rechercherMission(codeMission);
                 if (mission != null) {
-                    System.out.println("- " + mission.getCode() + " " + mission.getDestination() + 
+                    System.out.println("- " + mission.getCode() + " " + mission.getDestination() +
                                      ": " + entry.getValue() + " passagers");
                 }
             });

@@ -1,5 +1,7 @@
 package fr.starfleet.modele.personne;
 
+import java.util.Objects;
+
 public abstract class Personne {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 1L;
@@ -40,6 +42,20 @@ public abstract class Personne {
     
     // Méthode abstraite
     public abstract String getDescription();
+    
+    // Equals et hashCode
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Personne personne = (Personne) obj;
+        return this.identifiant.equals(personne.identifiant);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(identifiant);
+    }
     
     @Override
     public String toString() {

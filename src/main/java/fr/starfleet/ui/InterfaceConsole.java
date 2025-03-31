@@ -41,31 +41,17 @@ public class InterfaceConsole {
                 scanner.nextLine(); // Pour consommer le retour à la ligne
                 
                 switch (choix) {
-                    case 1:
-                        gererVaisseaux();
-                        break;
-                    case 2:
-                        gererPersonnes();
-                        break;
-                    case 3:
-                        gererMissions();
-                        break;
-                    case 4:
-                        gererReservations();
-                        break;
-                    case 5:
-                        sauvegarderDonnees();
-                        break;
-                    case 6:
-                        chargerDonnees();
-                        break;
-                    case 0:
+                    case 1 -> gererVaisseaux();
+                    case 2 -> gererPersonnes();
+                    case 3 -> gererMissions();
+                    case 4 -> gererReservations();
+                    case 5 -> sauvegarderDonnees();
+                    case 6 -> chargerDonnees();
+                    case 0 -> {
                         continuer = false;
                         System.out.println("Au revoir !");
-                        break;
-                    default:
-                        System.out.println("Choix invalide, veuillez réessayer.");
-                        break;
+                    }
+                    default -> System.out.println("Choix invalide, veuillez réessayer.");
                 }
             }
         }
@@ -85,29 +71,17 @@ public class InterfaceConsole {
         scanner.nextLine(); // Pour consommer le retour à la ligne
         
         switch (choix) {
-            case 1:
-                ajouterVaisseau();
-                break;
-            case 2:
-                modifierVaisseau();
-                break;
-            case 3:
-                supprimerVaisseau();
-                break;
-            case 4:
-                afficherVaisseaux();
-                break;
-            case 5:
-                rechercherVaisseau();
-                break;
-            case 0:
-                // Retour au menu principal
-                break;
-            default:
-                System.out.println("Choix invalide, veuillez réessayer.");
-                break;
+            case 1 -> ajouterVaisseau();
+            case 2 -> modifierVaisseau();
+            case 3 -> supprimerVaisseau();
+            case 4 -> afficherVaisseaux();
+            case 5 -> rechercherVaisseau();
+            case 0 -> {
+            }
+            default -> System.out.println("Choix invalide, veuillez réessayer.");
         }
-    }
+        // Retour au menu principal
+            }
     
     private void gererPersonnes() {
         System.out.println("\n=== GESTION DES PERSONNES ===");
@@ -124,32 +98,18 @@ public class InterfaceConsole {
         scanner.nextLine(); // Pour consommer le retour à la ligne
         
         switch (choix) {
-            case 1:
-                ajouterOfficier();
-                break;
-            case 2:
-                ajouterCivil();
-                break;
-            case 3:
-                modifierPersonne();
-                break;
-            case 4:
-                supprimerPersonne();
-                break;
-            case 5:
-                afficherPersonnes();
-                break;
-            case 6:
-                rechercherPersonne();
-                break;
-            case 0:
-                // Retour au menu principal
-                break;
-            default:
-                System.out.println("Choix invalide, veuillez réessayer.");
-                break;
+            case 1 -> ajouterOfficier();
+            case 2 -> ajouterCivil();
+            case 3 -> modifierPersonne();
+            case 4 -> supprimerPersonne();
+            case 5 -> afficherPersonnes();
+            case 6 -> rechercherPersonne();
+            case 0 -> {
+            }
+            default -> System.out.println("Choix invalide, veuillez réessayer.");
         }
-    }
+        // Retour au menu principal
+            }
     
     private void gererMissions() {
         System.out.println("\n=== GESTION DES MISSIONS ===");
@@ -166,31 +126,15 @@ public class InterfaceConsole {
         scanner.nextLine(); // Pour consommer le retour à la ligne
         
         switch (choix) {
-            case 1:
-                creerMission();
-                break;
-            case 2:
-                modifierMission();
-                break;
-            case 3:
-                annulerMission();
-                break;
-            case 4:
-                afficherMissions();
-                break;
-            case 5:
-                rechercherMissions();
-                break;
-            case 6:
-                associerMissionVaisseau();
-                break;
-            case 0:
-                // Retour au menu principal
+            case 1 -> creerMission();
+            case 2 -> modifierMission();
+            case 3 -> annulerMission();
+            case 4 -> afficherMissions();
+            case 5 -> rechercherMissions();
+            case 6 -> associerMissionVaisseau();
+            case 0 -> // Retour au menu principal
                 System.out.println("Retour au menu principal.");
-                break;
-            default:
-                System.out.println("Choix invalide, veuillez réessayer.");
-                break;
+            default -> System.out.println("Choix invalide, veuillez réessayer.");
         }
     }
     
@@ -208,29 +152,17 @@ public class InterfaceConsole {
         scanner.nextLine(); // Pour consommer le retour à la ligne
         
         switch (choix) {
-            case 1:
-                creerReservation();
-                break;
-            case 2:
-                confirmerReservation();
-                break;
-            case 3:
-                annulerReservation();
-                break;
-            case 4:
-                afficherReservationsPersonne();
-                break;
-            case 5:
-                afficherReservationsMission();
-                break;
-            case 0:
-                // Retour au menu principal
-                break;
-            default:
-                System.out.println("Choix invalide, veuillez réessayer.");
-                break;
+            case 1 -> creerReservation();
+            case 2 -> confirmerReservation();
+            case 3 -> annulerReservation();
+            case 4 -> afficherReservationsPersonne();
+            case 5 -> afficherReservationsMission();
+            case 0 -> {
+            }
+            default -> System.out.println("Choix invalide, veuillez réessayer.");
         }
-    }
+        // Retour au menu principal
+            }
     
     private void sauvegarderDonnees() {
         System.out.println("\n=== SAUVEGARDE DES DONNÉES ===");
@@ -364,7 +296,7 @@ public class InterfaceConsole {
     System.out.print("Spécialité de l'officier : ");
     String specialite = scanner.nextLine();
 
-    Officier officier = new Officier(nom, prenom, identifiant, rang, specialite);
+    Officier officier = new Officier(nom, prenom, identifiant, Integer.parseInt(rang), specialite);
     if ((boolean) systeme.ajouterPersonne(officier)) {
         System.out.println("Officier ajouté avec succès !");
     } else {

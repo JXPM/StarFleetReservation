@@ -10,5 +10,5 @@ git push --set-upstream origin main
 #fichier Maj et push
 git status
 git add .
-git commit -m "les dernieres touches"
+git commit -m "modifie de date"
 git push origin main

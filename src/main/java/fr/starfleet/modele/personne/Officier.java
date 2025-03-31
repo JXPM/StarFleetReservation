@@ -5,21 +5,21 @@ package fr.starfleet.modele.personne;
 public class Officier extends Personne {
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 1L;
-    private String rang;
+    private int rang;
     private String specialite;
 
-    public Officier(String nom, String prenom, String identifiant, String rang, String specialite) {
+    public Officier(String nom, String prenom, String identifiant, int rang, String specialite) {
         super(nom, prenom, identifiant);
         this.rang = rang;
         this.specialite = specialite;
     }
 
 // GETTERS ET SETTERS
-    public String getRang() {
+    public int getRang() {
         return rang;
     }
 
-    public void setRang(String rang) {
+    public void setRang(int rang) {
         this.rang = rang;
     }
 
